@@ -50,7 +50,6 @@ function github_handle_post($path){
 			} 
 		}	
   }	   
-  
   return $path;
 }
 ?>
