@@ -12,9 +12,9 @@ function github_handle_post($path){
 
 			global $addonPathData;
 			if (!is_dir($addonPathData.'/'.$repo_name)) {
-			  error_log('CREATE DIR : '.$addonPathData.'/'.$repo_name);
-			  if (!mkdir($addonPathData.'/'.$repo_name,0777,true)) {
+			  if (!mkdir($addonPathData.'/'.$repo_name,0755,true)) {
 			    error_log('Error creating directory  : '.$addonPathData.'/'.$repo_name);
+				exit();
 			  }
 			}
 			file_put_contents($addonPathData.'/'.$repo_name.'/notifications.php',print_r($post_data,true));
