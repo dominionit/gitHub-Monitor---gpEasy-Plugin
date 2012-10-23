@@ -11,6 +11,7 @@ function github_handle_post($path){
 			$repo_name = $post_data->repository->name;
 
 			global $addonPathData;
+			
 			/*
 			if (!is_dir($addonPathData)) {
 			  if (!mkdir($addonPathData,0775)) {
