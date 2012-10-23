@@ -11,28 +11,13 @@ function github_handle_post($path){
 			$repo_name = $post_data->repository->name;
 
 			global $addonPathData;
-			/*
-			if (!is_dir($addonPathData)) {
-			  if (!mkdir($addonPathData,0775)) {
-			    error_log('Error creating directory  : '.$addonPathData);
-				exit();
-			  }
-			  chmod($addonPathData,0775);
-			}
-			if (!is_dir($addonPathData.'/'.$repo_name)) {
-			  if (!mkdir($addonPathData.'/'.$repo_name,0775)) {
-			    error_log('Error creating directory  : '.$addonPathData.'/'.$repo_name);
-				exit();
-			  }
-			  chmod($addonPathData.'/'.$repo_name,0775);
-			}
-			*/
+
 			$oldmask = umask(0755);
 			gpFiles::SaveArray($addonPathData.'/'.$repo_name.'/notifications.php','news',$post_data);
 			//unmask($oldmask);
-			//file_put_contents($addonPathData.'/'.$repo_name.'/notifications.php',print_r($post_data,true));
 
 			$fp = fopen($addonPathData.'/flock.php', "c");
+			chmod($addonPathData.'/flock.php',0755);
 		
 			if (flock($fp, LOCK_EX)) { // do an exclusive lock
 			//This is now handeld as a critical section
