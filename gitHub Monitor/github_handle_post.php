@@ -6,10 +6,11 @@ function github_handle_post($path){
 	    //okay a post from gitHub to us
 		if (isset($_POST['payload'])) {
 			$post_data = json_decode($_POST['payload']);
+			error_log(print_r($post_data));
 			$repo_name = $post_data['repository']['name'];
 			global $addonPathData;
 			if (!is_dir($addonPathData.'/'.$repo_name)) {
-			  mkdir($addonPathData.'/'.$repo_name);
+			  mkdir($addonPathData.'/'.$repo_name,0644,true);
 			}
 			file_put_contents($addonPathData.'/'.$repo_name.'/notifications.php',$post_data);
 			$fp = fopen($addonPathData.'/flock.php', "r+");
