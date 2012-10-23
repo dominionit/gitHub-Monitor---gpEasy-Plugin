@@ -21,7 +21,7 @@ function github_handle_post($path){
 			 } else {
 			   $news  = array('comment' => 'New entry');
              }			 
-			 news[] = array('comment' => ['commits']['message']);
+			 $news[] = array('comment' => $post_data['commits']['message']);
 			 common::SaveArray($addonPathData.'/news.php','news',$news);
 			 //Exit critical section
 			 flock($fp, LOCK_UN); // release the lock
