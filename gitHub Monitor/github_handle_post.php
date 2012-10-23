@@ -6,14 +6,18 @@ function github_handle_post($path){
 	   ( $_SERVER['REMOTE_ADDR'] == '127.0.0.1')) {
 	    //okay a post from gitHub to us
 		if (isset($_POST['payload'])) {
+		    error_log('github_handle_post - 1');
 			$post_data = json_decode($_POST['payload']);
 			//error_log(print_r($post_data,true));
 			$repo_name = $post_data->repository->name;
+			error_log('github_handle_post - 2');
 			global $addonPathData;
 			if (!is_dir($addonPathData.'/'.$repo_name)) {
 			  mkdir($addonPathData.'/'.$repo_name,0644,true);
 			}
 			file_put_contents($addonPathData.'/'.$repo_name.'/notifications.php',print_r($post_data,true));
+			error_log('github_handle_post - 3');
+			
 			$fp = fopen($addonPathData.'/flock.php', "c");
 			if (flock($fp, LOCK_EX)) { // do an exclusive lock
 			//This is now handeld as a critical section
@@ -31,6 +35,7 @@ function github_handle_post($path){
 			 gpFiles::SaveArray($addonPathData.'/news.php','news',$news);
 			 //Exit critical section
 			 flock($fp, LOCK_UN); // release the lock
+			 
 			 exit(); //we can stop everything, no need to let server get unwanted data back
 			} 
 		}	
