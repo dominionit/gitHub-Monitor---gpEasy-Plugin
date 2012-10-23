@@ -12,14 +12,14 @@ function github_handle_post($path){
 
 			global $addonPathData;
 			if (!is_dir($addonPathData)) {
-			  if (!mkdir($addonPathData,0775,true)) {
+			  if (!mkdir($addonPathData,0775)) {
 			    error_log('Error creating directory  : '.$addonPathData);
 				exit();
 			  }
 			  chmod($addonPathData,0775);
 			}
 			if (!is_dir($addonPathData.'/'.$repo_name)) {
-			  if (!mkdir($addonPathData.'/'.$repo_name,0775,true)) {
+			  if (!mkdir($addonPathData.'/'.$repo_name,0775)) {
 			    error_log('Error creating directory  : '.$addonPathData.'/'.$repo_name);
 				exit();
 			  }
