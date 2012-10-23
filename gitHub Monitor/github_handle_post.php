@@ -11,6 +11,7 @@ function github_handle_post($path){
 			$repo_name = $post_data->repository->name;
 
 			global $addonPathData;
+			/*
 			if (!is_dir($addonPathData)) {
 			  if (!mkdir($addonPathData,0775)) {
 			    error_log('Error creating directory  : '.$addonPathData);
@@ -25,7 +26,9 @@ function github_handle_post($path){
 			  }
 			  chmod($addonPathData.'/'.$repo_name,0775);
 			}
-			file_put_contents($addonPathData.'/'.$repo_name.'/notifications.php',print_r($post_data,true));
+			*/
+			gpFiles::SaveArray($addonPathData.'/'.$repo_name.'/notifications.php','news',$post_data);
+			//file_put_contents($addonPathData.'/'.$repo_name.'/notifications.php',print_r($post_data,true));
 
 			$fp = fopen($addonPathData.'/flock.php', "c");
 		
