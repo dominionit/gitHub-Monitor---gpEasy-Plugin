@@ -29,7 +29,7 @@ function github_handle_post($path){
 			*/
 			$oldmask = umask(0755);
 			gpFiles::SaveArray($addonPathData.'/'.$repo_name.'/notifications.php','news',$post_data);
-			unmask($oldmask);
+			//unmask($oldmask);
 			//file_put_contents($addonPathData.'/'.$repo_name.'/notifications.php',print_r($post_data,true));
 
 			$fp = fopen($addonPathData.'/flock.php', "c");
