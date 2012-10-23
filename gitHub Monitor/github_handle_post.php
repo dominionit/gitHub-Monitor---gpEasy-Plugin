@@ -17,7 +17,7 @@ function github_handle_post($path){
 			//unmask($oldmask);
 
 			$fp = fopen($addonPathData.'/flock.php', "c");
-			chmod($addonPathData.'/flock.php',0755);
+			chmod($addonPathData.'/flock.php',0666);
 		
 			if (flock($fp, LOCK_EX)) { // do an exclusive lock
 			//This is now handeld as a critical section
