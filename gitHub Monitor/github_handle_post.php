@@ -101,8 +101,8 @@ function github_handle_post($path){
 
 			global $addonPathData;
 
-			$oldmask = umask(0755); //hardarse servers, cant get file rights correct for directory creation no mattter what.
-			gpFiles::SaveArray($addonPathData.'/'.$repo_name.'/dummy.php','blank',array());
+			$oldmask = umask(0);//0755 //hardarse servers, cant get file rights correct for directory creation no mattter what.
+			gpFiles::SaveArray($addonPathData.'/'.$repo_name.'/dummy.php','blank',$gitHubData );
 			
 			$fp = fopen($addonPathData.'/flock.php', "c");
 			chmod($addonPathData.'/flock.php',0666);
@@ -123,8 +123,9 @@ function github_handle_post($path){
 				}
 				
 				//Index file for this repo needs to be updated.
-				$repo_index = array();
+				
 				if (file_exists($addonPathData.'/'.$repo_name.'/repo_index.php')) {
+				  $repo_index = array();
 				  include $addonPathData.'/'.$repo_name.'/repo_index.php';
 				}
 				foreach ($commits as $commitItem) {
