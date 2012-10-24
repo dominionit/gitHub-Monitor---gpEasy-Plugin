@@ -47,7 +47,7 @@ function gitHubArray($post_data){
   $result['head_commit']['author']['username'] = $post_data->head_commit->author->username;
   $result['head_commit']['author']['email'] = $post_data->head_commit->author->email;
   
-  foreach ($post_data->head_commit->added as $targetCommit) {
+  foreach ($post_data->commits as $targetCommit) {
     $result['commits'][] = array(
 						'author' => array ( 
 								'name' => $targetCommit->author->name,
