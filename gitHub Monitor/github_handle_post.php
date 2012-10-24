@@ -112,7 +112,7 @@ function github_handle_post($path){
 
 			global $addonPathData;
 
-			$oldmask = umask(0)//0755 //hardarse servers, cant get file rights correct for directory creation no mattter what.
+			$oldmask = umask(0);//0755 //hardarse servers, cant get file rights correct for directory creation no mattter what.
 			gpFiles::SaveArray($addonPathData.'/'.$repo_name.'/dummy.php','blank',$gitHubData );
 			
 			$fp = fopen($addonPathData.'/flock.php', "c");
