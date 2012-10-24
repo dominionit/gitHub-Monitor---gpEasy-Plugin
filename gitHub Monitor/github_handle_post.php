@@ -78,7 +78,7 @@ function gitHubArray($post_data){
 			$result['commits']['added'] = $targetFiles;
 	}							
   }	
-   
+  return $result; 
 }
 
 function github_handle_post($path){
