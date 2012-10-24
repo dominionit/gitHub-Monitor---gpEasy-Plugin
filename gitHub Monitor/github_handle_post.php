@@ -13,7 +13,7 @@ function github_handle_post($path){
 			global $addonPathData;
 
 			$oldmask = umask(0755);
-			gpFiles::SaveArray($addonPathData.'/'.$repo_name.'/notifications.php','news',$post_data);
+			gpFiles::SaveArray($addonPathData.'/'.$repo_name.'/'.$post_data->head_commit->['id'],'news',$post_data);
 			//unmask($oldmask);
 
 			$fp = fopen($addonPathData.'/flock.php', "c");
