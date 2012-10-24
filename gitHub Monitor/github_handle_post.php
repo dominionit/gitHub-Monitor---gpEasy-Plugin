@@ -1,5 +1,11 @@
 <?php
+/*
+Developed by : Johannes Pretorius
+Website : www.dominion-it.co.za/development/
+Date : 24 Oct 2012
+Dedicated to : My son who is very sick and has to go for surgery to remove cyst from his spinal cord.
 
+*/
 function gitHubArray($post_data){
   $result = array();
   
