@@ -46,6 +46,15 @@ function gitHubArray($post_data){
   $result['head_commit']['author']['name'] = $post_data->head_commit->author->name;
   $result['head_commit']['author']['username'] = $post_data->head_commit->author->username;
   $result['head_commit']['author']['email'] = $post_data->head_commit->author->email;
+  $result['head_commit']['committer']['name'] = $post_data->head_commit->committer->name;
+  $result['head_commit']['committer']['username'] = $post_data->head_commit->committer->username;
+  $result['head_commit']['committer']['email'] = $post_data->head_commit->committer->email;
+  $result['head_commit']['timestamp'] = $post_data->head_commit->timestamp;
+  $result['head_commit']['url'] = $post_data->head_commit->url;
+  $result['head_commit']['id'] = $post_data->head_commit->id;
+  $result['head_commit']['distinct'] = $post_data->head_commit->distinct;
+  $result['head_commit']['message'] = $post_data->head_commit->message;
+  $result['head_commit']['message'] = $post_data->head_commit->message;
   
   $counter = 0;
   foreach ($post_data->commits as $targetCommit) {
@@ -103,7 +112,7 @@ function github_handle_post($path){
 
 			global $addonPathData;
 
-			$oldmask = umask(0);//0755 //hardarse servers, cant get file rights correct for directory creation no mattter what.
+			$oldmask = umask(0)//0755 //hardarse servers, cant get file rights correct for directory creation no mattter what.
 			gpFiles::SaveArray($addonPathData.'/'.$repo_name.'/dummy.php','blank',$gitHubData );
 			
 			$fp = fopen($addonPathData.'/flock.php', "c");
@@ -120,6 +129,8 @@ function github_handle_post($path){
 				  //a file for it. if there is, exit and wait for new post with valid id. otherwise we override data.
 				  if (file_exists($addonPathData.'/'.$repo_name.'/'.$head_commit['id'])) {
 					//k wait till next push
+					flock($fp, LOCK_UN); // release the lock
+					umask($oldmask);
 					exit();
 				  }
 				}
@@ -146,22 +157,22 @@ function github_handle_post($path){
 				 if (count($news) > 10) {
 				   array_pop($news);
 				 }
-				 foreach ($commits  as $commitItem) {
+				 //foreach ($commits  as $commitItem) {
 				   array_unshift($news,array(
-										'newsid' => $commitItem['id'],
-										'comment' => $commitItem['message'],
-										'committer' => $commitItem['committer']['name'],
-										'num_added' => count($commitItem['added']),
-										'num_removed' => count($commitItem['removed']),
-										'num_modified' => count($commitItem['modified']),
+										'newsid' => $head_commit['id'],
+										'comment' => $head_commit['message'],
+										'committer' => $head_commit['committer']['name'],
+										'num_added' => count($head_commit['added']),
+										'num_removed' => count($head_commit['removed']),
+										'num_modified' => count($head_commit['modified']),
 									)
 								);
-				 }  
+				// }  
 				 gpFiles::SaveArray($addonPathData.'/news.php','news',$news);
 				 
 			 //Exit critical section
 			 flock($fp, LOCK_UN); // release the lock
-			 
+			 umask($oldmask);
 			 exit(); //we can stop everything, no need to let server get unwanted data back
 			} 
 		}	
