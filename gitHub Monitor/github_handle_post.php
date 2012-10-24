@@ -47,8 +47,9 @@ function gitHubArray($post_data){
   $result['head_commit']['author']['username'] = $post_data->head_commit->author->username;
   $result['head_commit']['author']['email'] = $post_data->head_commit->author->email;
   
+  $counter = 0;
   foreach ($post_data->commits as $targetCommit) {
-    $result['commits'][] = array(
+    $result['commits'][$counter] = array(
 						'author' => array ( 
 								'name' => $targetCommit->author->name,
 								'username' => $targetCommit->author->username,
@@ -69,14 +70,15 @@ function gitHubArray($post_data){
 						  'modified' => array(),
 						);
 	foreach ($targetCommit->removed as $targetFiles) {
-			$result['commits']['removed'] = $targetFiles;
+			$result['commits'][$counter]['removed'] = $targetFiles;
 	}							
 	foreach ($targetCommit->modified as $targetFiles) {
-			$result['commits']['modified'] = $targetFiles;
+			$result['commits'][$counter]['modified'] = $targetFiles;
 	}							
 	foreach ($targetCommit->added as $targetFiles) {
-			$result['commits']['added'] = $targetFiles;
+			$result['commits'][$counter]['added'] = $targetFiles;
 	}							
+	$counter++;
   }	
   return $result; 
 }
