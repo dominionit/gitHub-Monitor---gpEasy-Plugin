@@ -11,6 +11,7 @@ function gitHubArray($post_data){
   
   $result['general']['forced'] = $post_data->forced; //was commit forced (usually true with a newly created repo)
   $result['general']['after'] = $post_data->after;
+  $result['general']['before'] = $post_data->before;
   $result['general']['deleted'] = $post_data->deleted;
   $result['general']['ref'] = $post_data->ref; 
   $result['general']['compare'] = $post_data->compare; //compare url
@@ -148,7 +149,8 @@ function github_handle_post($path){
 				  include $addonPathData.'/'.$repo_name.'/repo_index.php';
 				}
 				foreach ($commits as $commitItem) {
-				  $repo_index[$head_commit['id']]['commit'] = $commitItem['id'];
+				  $repo_index[$result['general']['after']]['commits'][] = $commitItem['id'];
+				  $repo_index[$result['general']['after']]['prev_commit'] = $result['general']['before'];
 				}  
 				gpFiles::SaveArray($addonPathData.'/'.$repo_name.'/repo_index.php','repo_index',$repo_index);
 				
@@ -163,7 +165,6 @@ function github_handle_post($path){
 				 if (count($news) > 10) {
 				   array_pop($news);
 				 }
-				 //foreach ($commits  as $commitItem) {
 				   array_unshift($news,array(
 										'newsid' => $head_commit['id'],
 										'comment' => $head_commit['message'],
@@ -173,7 +174,6 @@ function github_handle_post($path){
 										'num_modified' => count($head_commit['modified']),
 									)
 								);
-				// }  
 				 gpFiles::SaveArray($addonPathData.'/news.php','news',$news);
 				 
 			 //Exit critical section
