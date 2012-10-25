@@ -168,6 +168,7 @@ function github_handle_post($path){
 				 }
 				   array_unshift($news,array(
 										'newsid' => $head_commit['id'],
+										'repo_name' => $repo_name,
 										'datetime' => $head_commit['timestamp'],
 										'url' => $head_commit['url'],
 										'comment' => $head_commit['message'],
