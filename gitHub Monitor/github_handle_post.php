@@ -149,8 +149,8 @@ function github_handle_post($path){
 				  include $addonPathData.'/'.$repo_name.'/repo_index.php';
 				}
 				foreach ($commits as $commitItem) {
-				  $repo_index[$result['general']['after']]['commits'][] = $commitItem['id'];
-				  $repo_index[$result['general']['after']]['prev_commit'] = $result['general']['before'];
+				  $repo_index[$general['after']]['commits'][] = $commitItem['id'];
+				  $repo_index[$general['after']]['prev_commit'] = $general['before'];
 				}  
 				gpFiles::SaveArray($addonPathData.'/'.$repo_name.'/repo_index.php','repo_index',$repo_index);
 				
