@@ -7,10 +7,23 @@ defined('is_running') or die('Not an entry point...');
 class gitHub_Monitor_Gadget{
 
 	function gitHub_Monitor_Gadget(){
-		echo '<h2>gitHub Update</h2>';
-		echo '<div>';
-		echo 'Still to be done.';
-		echo '</div>';
+	    global $addonPathData;
+		if (!file_exists($addonPathData.'/news.php')) {
+		  echo '<h2>gitHub Update</h2>';
+		  echo '<div>';
+		   echo 'No updates received yet.';
+		  echo '</div>';
+		}
+		include $addonPathData.'/news.php';
+		
+		echo '<div id="github-header"><span>Coding News</span></h2>';
+		foreach($news as $newsItem) {
+		  echo '<div>';
+  		   echo "<span class='github-item-header'><a href='{$newsItem['url']}' title='{$newsItem['repo_name']}'>{$newsItem['repo_name']}</a></span><br/>";
+		   echo "<span class='github-item'>{$newsItem['datetime']} - {$newsItem['comment']}</span>";
+		   echo "<span class='github-item-info'>{$newsItem['comment']}</span>";
+		  echo '</div>';
+		}
 	}
 
 }
